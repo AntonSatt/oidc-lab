@@ -1,0 +1,6 @@
+# Kopiera till terraform.tfvars (gitignorerad) och fyll i dina värden.
+#   tenant_id:       az account show --query tenantId -o tsv
+#   subscription_id: az account show --query id -o tsv
+tenant_id            = "00000000-0000-0000-0000-000000000000"
+subscription_id      = "00000000-0000-0000-0000-000000000000"
+storage_account_name = "stoidclabanton001" # samma namn du gav bootstrap.sh

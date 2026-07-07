@@ -1,0 +1,40 @@
+name: apply
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    # Grinden. environment: prod gör tre saker på en gång:
+    #   1. GitHub vägrar starta jobbet alls om refen inte matchar
+    #      environmentets branch-policy (main-only, satt i identities/)
+    #   2. OIDC-intyget får subject repo:...:environment:prod - det enda
+    #      subject apply-identiteten federerar
+    #   3. jobbet ser environment-variabeln AZURE_CLIENT_ID_APPLY
+    environment: prod
+    env:
+      ARM_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: opentofu/setup-opentofu@v1
+
+      - uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID_APPLY }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: tofu init
+        working-directory: infra
+        run: tofu init
+
+      - name: tofu apply
+        working-directory: infra
+        run: tofu apply -auto-approve

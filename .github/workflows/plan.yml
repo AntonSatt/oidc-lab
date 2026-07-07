@@ -1,0 +1,43 @@
+# Körs på varje PR - även ogranskade branches. Det är OK by design:
+# plan-identiteten kan bara läsa (Reader på subscriptionen, Blob Data
+# Reader på state-containern).
+name: plan
+
+on:
+  pull_request:
+
+# id-token: write är det som låter jobbet be GitHub om OIDC-intyget.
+# Utan den kan azure/login inte ens försöka.
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    env:
+      ARM_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: opentofu/setup-opentofu@v1
+
+      # Inga secrets: client-id är publikt (en vanlig variabel), beviset
+      # är OIDC-intyget GitHub utfärdar åt jobbet. Azure matchar intygets
+      # subject (repo:...:pull_request) mot plan-identitetens federated
+      # credential.
+      - uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID_PLAN }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: tofu init
+        working-directory: infra
+        run: tofu init
+
+      # -lock=false: statelåset är en blob-lease och kräver skrivrätt -
+      # som plan-identiteten medvetet saknar. Läsning låser inget ändå.
+      - name: tofu plan
+        working-directory: infra
+        run: tofu plan -lock=false

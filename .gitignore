@@ -1,0 +1,10 @@
+# Lokal state för identities-stacken + ev. lokala körningar av infra/
+*.tfstate
+*.tfstate.backup
+
+# Dina id:n - inte hemliga, men de ska inte hårdkodas i ett publikt repo
+*.tfvars
+!*.tfvars.example
+
+.terraform/
+crash.log
