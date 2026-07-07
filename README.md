@@ -58,7 +58,7 @@ tofu init && tofu apply
 
 # 4. Commit:a backend.tf-ändringen, öppna en PR och se plan-workflowen
 #    logga in i Azure UTAN någon secret. Merga och se apply skapa
-#    rg-oidclab-demo-swedencentral-001.
+#    rg-oidclab-demo-polandcentral-001.
 ```
 
 ## Steg 5: attackera din egen grind
@@ -82,7 +82,7 @@ Det viktigaste steget — känn efter varför policyn är nyckeln:
 
 ```bash
 tofu destroy   # i identities/ och infra/ (eller ta bort demo-RG:n med az)
-az group delete --name rg-oidclab-mgmt-swedencentral-001
+az group delete --name rg-oidclab-mgmt-polandcentral-001
 ```
 
 Kostnad under labbets livstid: några ören (state-blobarna). Allt annat —

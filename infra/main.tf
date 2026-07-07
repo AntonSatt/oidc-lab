@@ -2,8 +2,8 @@
 # inte resursen utan vägen dit - plan från PR med läsidentiteten, apply
 # från main via environmentet prod med skrividentiteten.
 resource "azurerm_resource_group" "demo" {
-  name     = "rg-oidclab-demo-swedencentral-001"
-  location = "swedencentral"
+  name     = "rg-oidclab-demo-polandcentral-001"
+  location = "polandcentral"
 
   tags = {
     managed_by = "opentofu"

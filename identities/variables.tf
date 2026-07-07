@@ -16,7 +16,7 @@ variable "storage_account_name" {
 variable "location" {
   description = "Azure-region, samma som bootstrap.sh"
   type        = string
-  default     = "swedencentral"
+  default     = "polandcentral"
 }
 
 variable "github_owner" {

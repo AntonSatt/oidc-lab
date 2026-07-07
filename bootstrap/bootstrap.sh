@@ -9,7 +9,7 @@
 set -euo pipefail
 
 STORAGE_ACCOUNT="${1:?Ange storage-kontonamn, t.ex. stoidclabanton001}"
-LOCATION="swedencentral"
+LOCATION="polandcentral"
 RESOURCE_GROUP="rg-oidclab-mgmt-${LOCATION}-001"
 CONTAINER="tfstate"
 
