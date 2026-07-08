@@ -20,9 +20,9 @@ variable "location" {
 }
 
 variable "github_owner" {
-  description = "GitHub-användare/org som äger labbrepot"
+  description = "GitHub-användare/org som äger labbrepot - EXAKT skiftläge! Entra matchar OIDC-subjectet skiftlägeskänsligt (AADSTS7002138)"
   type        = string
-  default     = "antonsatt"
+  default     = "AntonSatt"
 }
 
 variable "github_repo_name" {
