@@ -22,6 +22,26 @@ resource "github_repository_environment_deployment_policy" "main_only" {
   branch_pattern = "main"
 }
 
+# Branchskydd på main: environmentpolicyn ovan styr vilka refs som får
+# minta prod-intyget, men utan det här kan vem som helst med push-rätt
+# skriva direkt till main och därmed NÅ policyns godkända ref. Kravet på
+# plan-checken stänger den dörren: plan körs bara på PR:er, så en direkt
+# push kan aldrig bära en godkänd check. enforce_admins = true gäller
+# även dig själv - det är poängen med träningen.
+resource "github_branch_protection" "main" {
+  repository_id = var.github_repo_name
+  pattern       = "main"
+
+  required_status_checks {
+    strict   = false
+    contexts = ["plan"]
+  }
+
+  enforce_admins      = true
+  allows_force_pushes = false
+  allows_deletions    = false
+}
+
 resource "github_actions_variable" "tenant_id" {
   repository    = var.github_repo_name
   variable_name = "AZURE_TENANT_ID"
