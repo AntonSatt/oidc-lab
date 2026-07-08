@@ -32,12 +32,13 @@ jobs:
           tenant-id: ${{ vars.AZURE_TENANT_ID }}
           subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
 
+      # -lock=false på BÅDA stegen: statelåset är en blob-lease och kräver
+      # skrivrätt - som plan-identiteten medvetet saknar. Läsning låser
+      # inget ändå. init tar också lås, inte bara plan.
       - name: tofu init
         working-directory: infra
-        run: tofu init
+        run: tofu init -lock=false
 
-      # -lock=false: statelåset är en blob-lease och kräver skrivrätt -
-      # som plan-identiteten medvetet saknar. Läsning låser inget ändå.
       - name: tofu plan
         working-directory: infra
         run: tofu plan -lock=false
