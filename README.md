@@ -1,7 +1,7 @@
 # oidc-lab
 
-[![plan](https://github.com/antonsatt/oidc-lab/actions/workflows/plan.yml/badge.svg)](https://github.com/antonsatt/oidc-lab/actions/workflows/plan.yml)
-[![apply](https://github.com/antonsatt/oidc-lab/actions/workflows/apply.yml/badge.svg)](https://github.com/antonsatt/oidc-lab/actions/workflows/apply.yml)
+[![plan](https://github.com/AntonSatt/oidc-lab/actions/workflows/plan.yml/badge.svg)](https://github.com/AntonSatt/oidc-lab/actions/workflows/plan.yml)
+[![apply](https://github.com/AntonSatt/oidc-lab/actions/workflows/apply.yml/badge.svg)](https://github.com/AntonSatt/oidc-lab/actions/workflows/apply.yml)
 
 Hemmalabb för OIDC/Workload Identity Federation mellan GitHub Actions och
 Entra ID, nedskalad från pop-infras mönster. Inga secrets någonstans:
@@ -20,8 +20,8 @@ infra/        demo-stacken CI:t förvaltar, remote state i containern
 
 | Identitet | Subject (vem får låna den) | Roller |
 |---|---|---|
-| `id-oidclab-plan-*` | `repo:antonsatt/oidc-lab:pull_request` — varje PR | Reader på subscriptionen, Blob Data Reader på state-containern |
-| `id-oidclab-apply-*` | `repo:antonsatt/oidc-lab:environment:prod` — bara main, via branch-policyn | Contributor på subscriptionen, Blob Data Contributor på containern |
+| `id-oidclab-plan-*` | `repo:AntonSatt/oidc-lab:pull_request` — varje PR | Reader på subscriptionen, Blob Data Reader på state-containern |
+| `id-oidclab-apply-*` | `repo:AntonSatt/oidc-lab:environment:prod` — bara main, via branch-policyn | Contributor på subscriptionen, Blob Data Contributor på containern |
 
 Skyddet sitter INTE i workflow-filerna (en PR kan ändra dem fritt) utan i
 environmentets deployment branch policy: bara main får deploya till prod,
@@ -42,7 +42,7 @@ PRIVATA konto (`az login`, `gh auth login`). Repot måste vara publikt
 ```bash
 # 0. Första commit:en, skapa GitHub-repot och pusha
 git add -A && git commit -m "OIDC-labb: UAMI + federated credentials"
-gh repo create antonsatt/oidc-lab --public --source . --push
+gh repo create AntonSatt/oidc-lab --public --source . --push
 
 # 1. Hönan-och-ägget: state-backendens infra, för hand, en gång
 cd bootstrap && ./bootstrap.sh stoidclab<dittnamn>001

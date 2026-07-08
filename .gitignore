@@ -8,3 +8,7 @@
 
 .terraform/
 crash.log
+
+# Sparade planfiler - binära, stale efter apply, kan innehålla känsliga värden
+tfplan
+*.tfplan
