@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # Hönan-och-ägget: state-backendens egen infrastruktur kan inte bo i
-# state:en den ska lagra. Körs EN gång, för hand, som du själv (samma
-# roll som pop-infras bootstrap/-katalog).
+# state:en den ska lagra. Körs EN gång, för hand, som du själv.
 #
 # Användning: ./bootstrap.sh <storage-kontonamn>
 #   Namnet måste vara globalt unikt, 3-24 tecken, bara a-z0-9.

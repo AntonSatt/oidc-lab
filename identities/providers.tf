@@ -1,6 +1,5 @@
-# Operatörskörd stack med LOKAL state (samma avvägning som pop-infras
-# bootstrap/2-backend): den här stacken skapar identiteterna som resten
-# av riggen loggar in med, så den kan inte själv bero på riggen.
+# Operatörskörd stack med LOKAL state: den här stacken skapar identiteterna
+# som resten av riggen loggar in med, så den kan inte själv bero på riggen.
 terraform {
   required_version = ">= 1.8"
 
@@ -23,7 +22,7 @@ provider "azurerm" {
 
 # Autentiseras via GITHUB_TOKEN i miljön: export GITHUB_TOKEN=$(gh auth token)
 # Båda sidor av federeringen i samma graf - client-id:n flödar som
-# referenser in i GitHub-variablerna, ingen copy-paste (pop-infra ADR 0002).
+# referenser in i GitHub-variablerna, ingen copy-paste.
 provider "github" {
   owner = var.github_owner
 }

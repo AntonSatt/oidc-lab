@@ -1,6 +1,6 @@
-# GitHub-sidan av federeringen, i samma graf som identiteterna
-# (pop-infras bootstrap/2-backend/github.tf). Det här är NYCKELN i hela
-# mönstret: environmentets branch-policy är det som gör apply-subjectet
+# GitHub-sidan av federeringen, i samma graf som identiteterna. Det här
+# är NYCKELN i hela mönstret: environmentets branch-policy är det som
+# gör apply-subjectet
 # säkert. Subjectet ensamt skyddar ingenting - en PR kan ändra workflows,
 # men den kan aldrig få GitHub att utfärda environment:prod-intyget från
 # sin branch så länge policyn nedan finns.

@@ -4,7 +4,8 @@
 [![apply](https://github.com/AntonSatt/oidc-lab/actions/workflows/apply.yml/badge.svg)](https://github.com/AntonSatt/oidc-lab/actions/workflows/apply.yml)
 
 Hemmalabb för OIDC/Workload Identity Federation mellan GitHub Actions och
-Entra ID, nedskalad från pop-infras mönster. Inga secrets någonstans:
+Entra ID, nedskalat från ett fullskaligt plattformsmönster. Inga secrets
+någonstans:
 GitHub utfärdar ett signerat intyg per jobb, Azure matchar intygets
 subject mot en federated credential på en user-assigned managed identity.
 
@@ -28,10 +29,10 @@ environmentets deployment branch policy: bara main får deploya till prod,
 alltså kan bara main minta apply-subjectet. Policyn är själv Terraform-kod
 i `identities/github.tf` — federeringens båda sidor i samma graf.
 
-Nedskalat mot pop-infra: roller på subscription i stället för tenant root
-management group, Contributor i stället för Owner (labbet skapar inga
-MG:er/policyer), och ingen central vending (`ci-identities/`) — ett repo,
-ett identitetspar.
+Nedskalningar mot en fullskalig setup: roller på subscription i stället
+för tenant root management group, Contributor i stället för Owner (labbet
+skapar inga MG:er/policyer), och ingen central identitets-vending — ett
+repo, ett identitetspar.
 
 ## Körordning
 
@@ -76,7 +77,14 @@ Det viktigaste steget — känn efter varför policyn är nyckeln:
 3. Ta (tillfälligt!) bort branch-policyn i `identities/github.tf`, kör
    apply, och upprepa attack 1. **Förväntat:** nu FUNKAR attacken.
    Subjectet ensamt skyddar ingenting — återställ policyn och notera
-   varför pop-infra hanterar den som kod.
+   varför den hör hemma som kod, inte som klick i UI:t.
+
+## Nästa nivå
+
+Labbet slutar inte vid federeringen — [ROADMAP.md](ROADMAP.md) beskriver
+etapperna vidare: self-hosted runners på Container Apps Jobs, build-once/
+promote med test/prod-environments, privat nätverk och repo-vending — allt
+inom studentkonto-budget, med tutorials per etapp.
 
 ## Städa
 
