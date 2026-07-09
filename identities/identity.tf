@@ -1,5 +1,4 @@
-# CI-identiteter enligt pop-infras modell (bootstrap/2-backend/identity.tf):
-# user-assigned managed identities med federated credentials - inga
+# CI-identiteter: user-assigned managed identities med federated credentials - inga
 # Entra-appobjekt, inga secrets. Två identiteter så att kod på en PR-branch
 # aldrig kör med skrivåtkomst:
 #   plan:  läs-only, mintbar från varje pull_request i repot
@@ -61,13 +60,13 @@ resource "azurerm_federated_identity_credential" "apply_prod" {
 }
 
 # RBAC. plan-identiteten är mintbar från ogranskad PR-kod: Reader på
-# subscriptionen är accepterat i labbet (samma resonemang som pop-infra
-# ADR 0002, fast på lägre scope).
+# subscriptionen är en medveten avvägning - läsa får ogranskad kod göra,
+# skriva aldrig.
 #
 # skip_service_principal_aad_check: identiteterna skapas i samma apply,
 # Entra->ARM-replikering kan annars ge PrincipalNotFound. Flaggan är
 # create-time-only - utan ignore_changes fastnar planen i evig diff
-# efter en import/state-återställning (pop-infra 2026-07-05).
+# efter en import/state-återställning.
 
 resource "azurerm_role_assignment" "plan_subscription_reader" {
   scope                            = local.subscription_scope
